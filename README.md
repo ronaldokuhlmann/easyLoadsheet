@@ -83,3 +83,12 @@ H5 = 77 kg
 TOTAL = 1385 kg
 ```
 
+## Publicar no GitHub Pages
+
+1. Crie um repositorio no GitHub.
+2. Envie estes arquivos para o repositorio.
+3. No GitHub, abra Settings > Pages.
+4. Em Branch, escolha `main` e a pasta `/root`.
+5. Salve e aguarde o link ficar disponivel.
+
+Depois disso, o site abre no celular como uma pagina normal.

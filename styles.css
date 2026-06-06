@@ -23,6 +23,12 @@
   display: none !important;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -44,6 +50,7 @@ select {
   width: min(100%, 780px);
   margin: 0 auto;
   padding: 18px 14px 28px;
+  overflow-x: hidden;
 }
 
 .topbar {
@@ -201,7 +208,7 @@ select {
 
 .silla-row {
   display: grid;
-  grid-template-columns: 1fr 190px;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 190px);
   gap: 10px;
 }
 
@@ -227,7 +234,7 @@ select {
 
 .silla-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -259,13 +266,13 @@ select:focus {
 
 .metric-strip {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
 
 .result-strip {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 12px;
 }
 
@@ -292,7 +299,7 @@ select:focus {
 }
 
 .split-title {
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
 }
 
@@ -356,7 +363,7 @@ select:focus {
 
 .hold-card {
   display: grid;
-  grid-template-columns: minmax(72px, 1fr) 82px minmax(132px, auto);
+  grid-template-columns: minmax(0, 1fr) 82px 128px;
   align-items: center;
   gap: 10px;
   min-height: 84px;
@@ -381,7 +388,7 @@ select:focus {
 }
 
 .hold-card.has-silla-card {
-  grid-template-columns: minmax(72px, 1fr) 82px 82px minmax(146px, auto);
+  grid-template-columns: minmax(0, 1fr) 82px 82px 128px;
 }
 
 .loadsheet-approved .hold-card {
@@ -573,7 +580,7 @@ select:focus {
 
 .lmc-card-main {
   display: grid;
-  grid-template-columns: 1fr 104px 1fr 104px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -596,7 +603,7 @@ pre {
 
 .actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -633,7 +640,13 @@ button.secondary {
   }
 
   .field-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .lmc-card-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -648,11 +661,11 @@ button.secondary {
   }
 
   .hold-card {
-    grid-template-columns: minmax(70px, 1fr) 76px;
+    grid-template-columns: minmax(0, 1fr) 76px;
   }
 
   .hold-card.has-silla-card {
-    grid-template-columns: minmax(70px, 1fr) 76px 76px;
+    grid-template-columns: minmax(0, 1fr) 70px 70px;
   }
 
   .hold-card output {
@@ -669,5 +682,19 @@ button.secondary {
   .lmc-card,
   .lmc-card-main {
     grid-template-columns: 1fr;
+  }
+
+  .metric-strip,
+  .result-strip,
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .general-total-card {
+    padding-right: 72px !important;
+  }
+
+  .general-total-card small {
+    max-width: 62px;
   }
 }

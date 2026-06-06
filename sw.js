@@ -1,4 +1,4 @@
-const cacheName = "easy-loadsheet-v49";
+const cacheName = "easy-loadsheet-v53";
 const assets = [
   "./",
   "./index.html",
