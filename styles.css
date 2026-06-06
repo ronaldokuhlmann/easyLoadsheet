@@ -14,9 +14,9 @@
   --shadow: 0 18px 40px rgba(18, 28, 45, 0.10);
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; min-width: 0; }
 [hidden] { display: none !important; }
-html, body { max-width: 100%; overflow-x: hidden; }
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -29,7 +29,8 @@ body {
 button, input, select { font: inherit; }
 
 .app-shell {
-  width: min(100%, 780px);
+  width: 100%;
+  max-width: 780px;
   margin: 0 auto;
   padding: 18px 14px 28px;
   overflow-x: hidden;
@@ -42,10 +43,16 @@ button, input, select { font: inherit; }
   gap: 16px;
   padding: 12px 2px 18px;
 }
+.topbar > div:first-child { min-width: 0; }
 
 .eyebrow, .topbar h1, .section-title h2, .section-title p, .hold-name, .hold-limit { margin: 0; }
 .eyebrow { color: var(--accent-strong); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
-.topbar h1 { margin-top: 2px; font-size: clamp(2rem, 10vw, 3.6rem); line-height: 0.95; }
+.topbar h1 {
+  margin-top: 2px;
+  font-size: clamp(2rem, 10vw, 3.6rem);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
 
 .language-tabs, .variant-tabs {
   display: grid;
@@ -53,6 +60,7 @@ button, input, select { font: inherit; }
 }
 .language-tabs {
   grid-template-columns: 1fr 1fr;
+  flex: 0 0 auto;
   border: 1px solid rgba(255, 94, 0, 0.28);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
@@ -89,6 +97,8 @@ button, input, select { font: inherit; }
 }
 
 .panel {
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 14px;
   border: 1px solid rgba(216, 222, 232, 0.9);
   border-radius: 8px;
@@ -321,6 +331,8 @@ input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px r
 .lmc-card-main { display: grid; grid-template-columns: 1fr 104px 1fr 104px; gap: 10px; }
 .lmc-result strong { color: var(--accent-strong); }
 pre {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   min-height: 154px;
   margin: 0;
@@ -331,6 +343,7 @@ pre {
   padding: 14px;
   font: 800 0.92rem/1.55 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 .lmc-summary { min-height: auto; margin-top: 12px; }
 .result-panel { margin-bottom: 0; }
@@ -351,6 +364,17 @@ button:disabled { opacity: 0.5; }
   .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .language-tabs {
+    justify-self: start;
+  }
+  .silla-row {
+    grid-template-columns: 1fr;
+  }
   .lmc-card-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 420px) {
