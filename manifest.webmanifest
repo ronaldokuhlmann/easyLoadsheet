@@ -1,0 +1,9 @@
+{
+  "name": "easyLoadsheet",
+  "short_name": "easyLoad",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#eef2f6",
+  "theme_color": "#ff5e00",
+  "icons": []
+}

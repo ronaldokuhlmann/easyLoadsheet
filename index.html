@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ff5e00">
+    <title>easyLoadsheet</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="aircraftEyebrow">Airbus A319</p>
+          <h1>easyLoadsheet</h1>
+        </div>
+        <div class="language-tabs" aria-label="Idioma">
+          <button type="button" class="selected" data-lang="pt">PT</button>
+          <button type="button" data-lang="es">ES</button>
+        </div>
+      </header>
+
+      <nav class="variant-tabs" aria-label="Selecionar aeronave">
+        <button type="button" class="selected" data-aircraft="A319">A319</button>
+        <button type="button" data-aircraft="A320">A320</button>
+        <button type="button" data-aircraft="A321">A321</button>
+      </nav>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2 data-i18n="bagsDataTitle">Dados das malas</h2>
+          <p data-i18n="bagsDataHelp">Informe o total, o peso recebido e o parcial em kg por mala.</p>
+        </div>
+
+        <div class="field-grid">
+          <label class="field">
+            <span data-i18n="totalClose">Total no cierre</span>
+            <input id="totalBags" type="number" inputmode="numeric" min="0" step="1" placeholder="Ex: 98">
+          </label>
+
+          <label class="field">
+            <span data-i18n="closeWeight">Peso total do cierre (kg)</span>
+            <input id="totalWeight" type="number" inputmode="decimal" min="0" step="0.1" placeholder="Ex: 1385">
+          </label>
+
+          <label class="field">
+            <span data-i18n="bagAverage">Parcial (kg por mala)</span>
+            <input id="bagAverage" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Ex: 15,39">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title split-title">
+          <div>
+            <h2 data-i18n="wheelchairsTitle">Sillas elétricas</h2>
+          </div>
+          <label class="switch">
+            <input id="wheelchairMode" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+            <span data-i18n="wheelchairSwitch">Silla</span>
+          </label>
+        </div>
+
+        <div class="wheelchair-area dropdown-panel" id="wheelchairFields" hidden>
+          <div class="silla-list" id="sillaList"></div>
+
+          <div class="silla-actions">
+            <button id="addSillaButton" type="button" class="mini-button" data-i18n="addWheelchair">Adicionar silla</button>
+            <button id="removeSillaButton" type="button" class="mini-button secondary" hidden data-i18n="removeLast">Remover última</button>
+          </div>
+
+          <div class="metric-strip silla-metrics" id="sillaMetrics">
+            <div>
+              <span data-i18n="bagsWithoutWheelchair">Malas sem silla</span>
+              <strong id="bagsWithoutWheelchair">0</strong>
+            </div>
+            <div>
+              <span data-i18n="newAverage">Novo parcial</span>
+              <strong id="recalculatedAverage">0 kg/bag</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title split-title">
+          <div>
+            <h2 data-i18n="distributionTitle">Distribuição</h2>
+            <p id="distributionHint">Use as bodegas conforme a operação.</p>
+          </div>
+          <label class="switch">
+            <input id="splitMode" type="checkbox">
+            <span class="switch-track" aria-hidden="true"></span>
+            <span data-i18n="split">Dividir</span>
+          </label>
+        </div>
+
+        <div class="hold-grid" id="holdGrid" aria-live="polite"></div>
+
+        <div class="metric-strip result-strip">
+          <div>
+            <span data-i18n="bagsWeight">Peso malas</span>
+            <strong id="calculatedWeight">0 kg</strong>
+          </div>
+          <div class="general-total-card">
+            <span data-i18n="generalTotal">Total geral</span>
+            <small id="generalTotalDiff">Falta 0 kg</small>
+            <strong id="calculatedCierreWeight">0 kg</strong>
+          </div>
+        </div>
+
+        <div class="notice" id="notice">Preencha os dados para calcular.</div>
+        <div class="approval-box" id="approvalBox" hidden>Loadsheet Approved</div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2 data-i18n="lmcTitle">Last Minute Changes</h2>
+          <p data-i18n="lmcHelp">LR soma 11 kg. Mala retirada do cierre subtrai 13 kg.</p>
+        </div>
+
+        <div class="lmc-area">
+          <div class="lmc-list" id="lmcList"></div>
+
+          <div class="silla-actions">
+            <button id="addLmcButton" type="button" class="mini-button" data-i18n="addLmc">Adicionar LMC</button>
+            <button id="removeLmcButton" type="button" class="mini-button secondary" hidden data-i18n="removeLast">Remover última</button>
+          </div>
+        </div>
+
+        <div class="metric-strip lmc-result">
+          <div>
+            <span data-i18n="bagVariation">Variação bags</span>
+            <strong id="lmcBagResult">0</strong>
+          </div>
+          <div>
+            <span data-i18n="weightVariation">Variação peso</span>
+            <strong id="lmcWeightResult">0 kg</strong>
+          </div>
+        </div>
+
+        <pre class="lmc-summary" id="lmcSummary">LMC: 0 bags / 0 kg</pre>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="section-title">
+          <h2 data-i18n="copySummaryTitle">Resumo para copiar</h2>
+          <p data-i18n="copySummaryHelp">Formato simples para conferir antes de preencher o loadsheet.</p>
+        </div>
+
+        <pre id="summary">A319</pre>
+
+        <div class="actions">
+          <button id="copyButton" type="button" data-i18n="copySummaryButton">Copiar resumo</button>
+          <button id="clearButton" type="button" class="secondary" data-i18n="clear">Limpar</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
